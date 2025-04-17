@@ -1,7 +1,23 @@
 package org.ngarcia.webapp.jsf3.entities;
 
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
+
+@Entity
+@Table(name="productos")
 public class Producto {
+
+   @Id
+   @GeneratedValue( strategy = GenerationType.IDENTITY)
+   private Long id;
+
    private String nombre;
+   private Integer precio;
+   private String sku;
+
+   @Column(name="fecha_registro")
+   private LocalDate fechaRegistro;
 
    public Producto() {
    }
@@ -16,5 +32,37 @@ public class Producto {
 
    public void setNombre(String nombre) {
       this.nombre = nombre;
+   }
+
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public Integer getPrecio() {
+      return precio;
+   }
+
+   public void setPrecio(Integer precio) {
+      this.precio = precio;
+   }
+
+   public String getSku() {
+      return sku;
+   }
+
+   public void setSku(String sku) {
+      this.sku = sku;
+   }
+
+   public LocalDate getFechaRegistro() {
+      return fechaRegistro;
+   }
+
+   public void setFechaRegistro(LocalDate fechaRegistro) {
+      this.fechaRegistro = fechaRegistro;
    }
 }
