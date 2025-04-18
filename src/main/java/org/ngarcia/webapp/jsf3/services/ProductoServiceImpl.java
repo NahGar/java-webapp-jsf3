@@ -21,10 +21,16 @@ public class ProductoServiceImpl implements ProductoService {
 
    @Override
    public Optional<Producto> porId(Long id) {
-      try {
-         return Optional.of(repository.porId(id));
-      } catch (Exception e) {
-         return Optional.empty();
-      }
+      return Optional.ofNullable(repository.porId(id));
+   }
+
+   @Override
+   public void guardar(Producto producto) {
+      repository.guardar(producto);
+   }
+
+   @Override
+   public void eliminar(Long id) {
+      repository.eliminar(id);
    }
 }
