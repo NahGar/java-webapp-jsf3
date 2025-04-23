@@ -69,6 +69,14 @@
                     </h:link>
                 </h:form>
             </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="" />
+                </f:facet>
+                <h:form id="eliminarProducto">
+                    <h:commandLink value="Eliminar" action="#{productoController.eliminar(prod.id)}" />
+                </h:form>
+            </h:column>
         </h:dataTable>
     </h:panelGrid>
 </h:body>

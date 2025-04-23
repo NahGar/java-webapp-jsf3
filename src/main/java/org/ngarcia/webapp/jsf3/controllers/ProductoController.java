@@ -69,4 +69,9 @@ public class ProductoController {
       this.id = id;
       return "productoForm.xhtml";
    }
+
+   public String eliminar(Long id) {
+      service.eliminar(id);
+      return "index.xhtml?faces-redirect=true";
+   }
 }

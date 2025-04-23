@@ -8,6 +8,11 @@
     <title>Formulario producto</title>
 </h:head>
 <h:body>
+    <!-- de esta manera se asigna el id al controlador para que funcione editar2 -->
+    <f:metadata>
+        <f:viewParam name="id" value="#{productoController.id}" />
+    </f:metadata>
+
     <h:panelGrid border="1">
         <f:facet name="header">
             <h:outputText value="Formulario producto" />
