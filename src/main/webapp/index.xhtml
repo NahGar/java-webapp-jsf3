@@ -49,7 +49,9 @@
                 <f:facet name="header">
                     <h:outputText value="Fecha registro" />
                 </f:facet>
-                <h:outputText value="#{prod.fechaRegistro}" />
+                <h:outputText value="#{prod.fechaRegistro}" >
+                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+                </h:outputText>
             </h:column>
             <h:column>
                 <f:facet name="header">
@@ -63,18 +65,17 @@
                 <f:facet name="header">
                     <h:outputText value="" />
                 </f:facet>
-                <h:form id="editarProducto2">
-                    <h:link value="Editar2" outcome="productoForm">
-                        <f:param name="id" value="#{prod.id}"/>
-                    </h:link>
-                </h:form>
+                <h:link value="Editar2" outcome="productoForm">
+                    <f:param name="id" value="#{prod.id}"/>
+                </h:link>
             </h:column>
             <h:column>
                 <f:facet name="header">
                     <h:outputText value="" />
                 </f:facet>
                 <h:form id="eliminarProducto">
-                    <h:commandLink value="Eliminar" action="#{productoController.eliminar(prod.id)}" />
+                    <h:commandLink value="Eliminar" action="#{productoController.eliminar(prod.id)}"
+                    onclick="return confirm('¿Está seguro que desea eliminar?')"/>
                 </h:form>
             </h:column>
         </h:dataTable>

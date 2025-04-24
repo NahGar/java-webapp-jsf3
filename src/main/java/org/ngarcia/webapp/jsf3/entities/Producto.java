@@ -19,6 +19,9 @@ public class Producto {
    @Column(name="fecha_registro")
    private LocalDate fechaRegistro;
 
+   @ManyToOne(fetch = FetchType.LAZY)
+   private Categoria categoria;
+
    public Producto() {
    }
 
@@ -66,7 +69,16 @@ public class Producto {
       this.fechaRegistro = fechaRegistro;
    }
 
-   @PrePersist
+   public Categoria getCategoria() {
+      return categoria;
+   }
+
+   public void setCategoria(Categoria categoria) {
+      this.categoria = categoria;
+   }
+
+   //Se comenta porque se va a asignar desde el formulario
+   //@PrePersist
    public void prePersist() {
       fechaRegistro = LocalDate.now();
    }

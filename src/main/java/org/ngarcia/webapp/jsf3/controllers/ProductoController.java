@@ -4,6 +4,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.*;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.ngarcia.webapp.jsf3.entities.Categoria;
 import org.ngarcia.webapp.jsf3.entities.Producto;
 import org.ngarcia.webapp.jsf3.services.ProductoService;
 
@@ -54,6 +55,14 @@ public class ProductoController {
       }
       return this.producto;
    }
+
+   @Produces
+   @RequestScoped
+   @Named("listadoCategorias")
+   public List<Categoria> findAllCategorias() {
+      return service.listarCategorias();
+   }
+
 
    @Produces
    @Model

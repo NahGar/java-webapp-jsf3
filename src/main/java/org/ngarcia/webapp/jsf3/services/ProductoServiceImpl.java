@@ -2,6 +2,7 @@ package org.ngarcia.webapp.jsf3.services;
 
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import org.ngarcia.webapp.jsf3.entities.Categoria;
 import org.ngarcia.webapp.jsf3.entities.Producto;
 import org.ngarcia.webapp.jsf3.repositories.CrudRepository;
 
@@ -13,6 +14,9 @@ public class ProductoServiceImpl implements ProductoService {
 
    @Inject
    private CrudRepository<Producto> repository;
+
+   @Inject
+   private CrudRepository<Categoria> repositoryCategoria;
 
    @Override
    public List<Producto> listar() {
@@ -32,5 +36,15 @@ public class ProductoServiceImpl implements ProductoService {
    @Override
    public void eliminar(Long id) {
       repository.eliminar(id);
+   }
+
+   @Override
+   public List<Categoria> listarCategorias() {
+      return repositoryCategoria.listar();
+   }
+
+   @Override
+   public Optional<Categoria> porIdCategoria(Long id) {
+      return Optional.ofNullable(repositoryCategoria.porId(id));
    }
 }

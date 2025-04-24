@@ -25,6 +25,7 @@ public class ProductoRepositoryImpl implements CrudRepository<Producto> {
 
    @Override
    public void guardar(Producto producto) {
+      System.out.println("Guardar producto: " + producto);
       if(producto.getId() != null && producto.getId() > 0) {
          em.merge(producto);
       }

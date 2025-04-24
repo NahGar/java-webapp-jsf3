@@ -13,23 +13,41 @@
         <f:viewParam name="id" value="#{productoController.id}" />
     </f:metadata>
 
+    <h:messages style="color:red" />
+
     <h:panelGrid border="1">
         <f:facet name="header">
-            <h:outputText value="Formulario producto" />
+            <h:outputText value="#{producto.id>0 ? 'Editar': 'Crear'} producto" />
         </f:facet>
         <h:link outcome="index" value="Volver" />
         <h:form>
             <!-- producto es un metodo en ProductoController -->
             <h:panelGrid columns="2">
                 <h:outputLabel value="Nombre" for="nombre" />
-                <h:inputText id="nombre" value="#{producto.nombre}" />
+                <h:inputText id="nombre" value="#{producto.nombre}" label="Nombre" required="true" />
+
                 <h:outputLabel value="Precio" for="precio" />
-                <h:inputText id="precio" value="#{producto.precio}" />
+                <h:inputText id="precio" value="#{producto.precio}" label="Precio" required="true" />
+
                 <h:outputLabel value="Sku" for="sku" />
-                <h:inputText id="sku" value="#{producto.sku}" />
-                <h:commandButton value="Guardar" action="#{productoController.guardar}" />
+                <h:inputText id="sku" value="#{producto.sku}" label="Sku" required="true" />
+
+                <h:outputLabel value="Fecha" for="fechaRegistro" />
+                <h:inputText id="fechaRegistro" value="#{producto.fechaRegistro}"
+                  label="Fecha registro" required="true" convertMessage="Indique la fecha con formato yyyyy-MM-dd">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+                    <f:passThroughAttribute name="type" value="date" />
+                </h:inputText>
+
+                <h:outputLabel value="Categoria" for="categoria" />
+                <h:selectOneMenu id="categoria" value="#{producto.categoria}" >
+                    <f:selectItem itemLabel="--- seleccione categoría ---" itemValue="#{null}" />
+                    <f:selectItems value="#{listadoCategorias}" var="c" itemLabel="#{c.nombre}" itemValue="#{c.id}" />
+                </h:selectOneMenu>
+
+                <h:commandButton value="#{producto.id>0 ? 'Editar': 'Crear'}" action="#{productoController.guardar}" />
+
                 <h:inputHidden value="#{producto.id}" />
-                <h:inputHidden value="#{producto.fechaRegistro}" />
             </h:panelGrid>
             <!-- los campos que no se modifican van hidden -->
         </h:form>
