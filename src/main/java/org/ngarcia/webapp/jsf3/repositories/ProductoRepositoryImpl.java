@@ -15,13 +15,16 @@ public class ProductoRepositoryImpl implements CrudRepository<Producto> {
 
    @Override
    public List<Producto> listar() {
-      return em.createQuery("from Producto p order by p.nombre",Producto.class).getResultList();
+      String sql = "select p from Producto p left outer join fetch p.categoria order by p.nombre";
+      return em.createQuery(sql,Producto.class).getResultList();
    }
 
    @Override
    public Producto porId(Long id) {
-      return em.find(Producto.class,id);
-}
+      //return em.find(Producto.class,id);
+      String sql = "select p from Producto p left outer join fetch p.categoria where p.id=:id";
+      return em.createQuery(sql,Producto.class).setParameter("id",id).getSingleResult();
+   }
 
    @Override
    public void guardar(Producto producto) {

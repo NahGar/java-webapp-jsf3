@@ -26,6 +26,16 @@
                 <h:outputLabel value="Nombre" for="nombre" />
                 <h:inputText id="nombre" value="#{producto.nombre}" label="Nombre" required="true" />
 
+                <h:outputLabel value="Categoria" for="categoria" />
+                <h:selectOneMenu id="categoria" value="#{producto.categoria}" >
+                    <f:selectItem itemLabel="--- seleccione categoría ---" itemValue="#{null}" />
+                    <!-- Al poner converter hay que quitar itemValue
+                    <f:selectItems value="#{listadoCategorias}" var="c" itemLabel="#{c.nombre}" itemValue="#{c.id}" />
+                    -->
+                    <f:selectItems value="#{listadoCategorias}" var="c" itemLabel="#{c.nombre}" />
+                    <f:converter binding="#{categoriaConverter}" />
+                </h:selectOneMenu>
+
                 <h:outputLabel value="Precio" for="precio" />
                 <h:inputText id="precio" value="#{producto.precio}" label="Precio" required="true" />
 
@@ -38,12 +48,6 @@
                     <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
                     <f:passThroughAttribute name="type" value="date" />
                 </h:inputText>
-
-                <h:outputLabel value="Categoria" for="categoria" />
-                <h:selectOneMenu id="categoria" value="#{producto.categoria}" >
-                    <f:selectItem itemLabel="--- seleccione categoría ---" itemValue="#{null}" />
-                    <f:selectItems value="#{listadoCategorias}" var="c" itemLabel="#{c.nombre}" itemValue="#{c.id}" />
-                </h:selectOneMenu>
 
                 <h:commandButton value="#{producto.id>0 ? 'Editar': 'Crear'}" action="#{productoController.guardar}" />
 
