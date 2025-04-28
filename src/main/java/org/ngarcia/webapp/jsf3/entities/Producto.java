@@ -1,6 +1,8 @@
 package org.ngarcia.webapp.jsf3.entities;
 
+import jakarta.inject.Named;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -12,13 +14,23 @@ public class Producto {
    @GeneratedValue( strategy = GenerationType.IDENTITY)
    private Long id;
 
+   @NotEmpty(message = "Nombre no puede ser vacío")
    private String nombre;
+
+   @NotNull(message = "Precio no puede ser vacío")
+   @Min(value = 5, message = "Precio debe ser mayor que 4")
+   @Max(value = 100000, message = "Precio no puede ser mayor que 100000")
    private Integer precio;
+
+   @NotEmpty(message = "Sku no puede ser vacío")
+   @Size(min = 4, max = 10, message = "Tamaño debe ser de 4 a 10")
    private String sku;
 
+   @NotNull(message = "Fecha no puede ser vacía")
    @Column(name="fecha_registro")
    private LocalDate fechaRegistro;
 
+   @NotNull(message = "Falta categoría")
    @ManyToOne(fetch = FetchType.LAZY)
    private Categoria categoria;
 

@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-    <meta charset="UTF-8" />
-    <!-- se llama al metodo titulo definido en ProductoController -->
-    <title>#{titulo}</title>
-</h:head>
-<h:body>
-    <h:panelGrid border="1">
-        <f:facet name="header">
-            <h:outputText value="#{titulo}" />
-        </f:facet>
-        <h:form id="crearProducto">
-            <!--
-            <h:commandLink value="Crear producto" action="productoForm.xhtml" />
-            -->
-            <h:commandButton value="Crear producto" action="productoForm.xhtml" />
-        </h:form>
-        <h:outputText value="No hay registros" rendered="#{empty listadoProductos}"/>
-        <h:dataTable value="#{listadoProductos}" var="prod" rendered="#{not empty listadoProductos}">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Id" />
-                </f:facet>
-                <h:outputText value="#{prod.id}" />
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Nombre" />
-                </f:facet>
-                <h:outputText value="#{prod.nombre}" />
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Categoría" />
-                </f:facet>
-                <h:outputText value="#{prod.categoria.nombre}" />
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Sku" />
-                </f:facet>
-                <h:outputText value="#{prod.sku}" />
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Precio" />
-                </f:facet>
-                <h:outputText value="#{prod.precio}" />
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Fecha registro" />
-                </f:facet>
-                <h:outputText value="#{prod.fechaRegistro}" >
-                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-                </h:outputText>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="" />
-                </f:facet>
-                <h:form id="editarProducto">
-                    <h:commandLink value="Editar" action="#{productoController.editar(prod.id)}" />
-                </h:form>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="" />
-                </f:facet>
-                <h:link value="Editar2" outcome="productoForm">
-                    <f:param name="id" value="#{prod.id}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="" />
-                </f:facet>
-                <h:form id="eliminarProducto">
-                    <h:commandLink value="Eliminar" action="#{productoController.eliminar(prod.id)}"
-                    onclick="return confirm('¿Está seguro que desea eliminar?')"/>
-                </h:form>
-            </h:column>
-        </h:dataTable>
-    </h:panelGrid>
-</h:body>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/layouts/main.xhtml">
+
+    <ui:define name="content">
+        <h:panelGrid border="1" class="table">
+            <f:facet name="header">
+                <h:outputText value="#{titulo}"/>
+            </f:facet>
+            <h:form id="crearProducto">
+                <!--
+                <h:commandLink value="Crear producto" action="productoForm.xhtml" />
+                -->
+                <h:commandButton value="Crear producto" action="productoForm.xhtml" class="btn btn-primary my-2"/>
+            </h:form>
+            <h:outputText value="No hay registros" rendered="#{empty listadoProductos}" class="alert alert-warning"/>
+            <h:dataTable value="#{listadoProductos}" var="prod" rendered="#{not empty listadoProductos}"
+                         class="table table-hover table-striped">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id"/>
+                    </f:facet>
+                    <h:outputText value="#{prod.id}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"/>
+                    </f:facet>
+                    <h:outputText value="#{prod.nombre}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Categoría"/>
+                    </f:facet>
+                    <h:outputText value="#{prod.categoria.nombre}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Sku"/>
+                    </f:facet>
+                    <h:outputText value="#{prod.sku}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Precio"/>
+                    </f:facet>
+                    <h:outputText value="#{prod.precio}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fecha registro"/>
+                    </f:facet>
+                    <h:outputText value="#{prod.fechaRegistro}">
+                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value=""/>
+                    </f:facet>
+                    <h:form id="editarProducto">
+                        <h:commandLink value="Editar" action="#{productoController.editar(prod.id)}"
+                                       class="btn btn-sm btn-success"/>
+                    </h:form>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value=""/>
+                    </f:facet>
+                    <h:link value="Editar2" outcome="productoForm" class="btn btn-sm btn-info">
+                        <f:param name="id" value="#{prod.id}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value=""/>
+                    </f:facet>
+                    <h:form id="eliminarProducto">
+                        <h:commandLink value="Eliminar" action="#{productoController.eliminar(prod)}"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('¿Está seguro que desea eliminar?')"/>
+                    </h:form>
+                </h:column>
+            </h:dataTable>
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>

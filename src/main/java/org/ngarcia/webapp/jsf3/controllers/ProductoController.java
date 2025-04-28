@@ -2,6 +2,8 @@ package org.ngarcia.webapp.jsf3.controllers;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.*;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.ngarcia.webapp.jsf3.entities.Categoria;
@@ -19,16 +21,11 @@ public class ProductoController {
 
    private Long id;
 
-   public Long getId() {
-      return id;
-   }
-
-   public void setId(Long id) {
-      this.id = id;
-   }
-
    @Inject
    private ProductoService service;
+
+   @Inject
+   private FacesContext facesContext;
 
    @Produces
    @Model
@@ -67,8 +64,20 @@ public class ProductoController {
    @Produces
    @Model
    public String guardar() {
-      System.out.println(this.producto);
+
+      //guarda id porque service.guardar() carga uno en insert
+      Long id = this.producto.getId();
+
+      System.out.println("GUARDAR: "+this.producto);
       service.guardar(this.producto);
+
+      if(id != null && id > 0) {
+         facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " actualizado"));
+      }
+      else {
+         facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " creado"));
+      }
+
       //el redirect es importante para evitar que se ejecute más de una vez (creo)
       return "index.xhtml?faces-redirect=true";
    }
@@ -79,8 +88,20 @@ public class ProductoController {
       return "productoForm.xhtml";
    }
 
-   public String eliminar(Long id) {
-      service.eliminar(id);
+   public String eliminar(Producto producto) {
+
+      service.eliminar(producto.getId());
+
+      facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " eliminado"));
+
       return "index.xhtml?faces-redirect=true";
+   }
+
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
    }
 }
