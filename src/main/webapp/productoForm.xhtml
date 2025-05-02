@@ -14,9 +14,10 @@
 
         <h:panelGrid border="1" class="table">
             <f:facet name="header">
-                <h:outputText value="#{producto.id>0 ? msgs['producto.boton.editar']: msgs['producto.boton.crear']} msgs['producto']"/>
+                <h:outputText value="#{producto.id>0 ? msgs['producto.boton.editar']: msgs['producto.boton.crear']} #{msgs['producto']}"/>
             </f:facet>
 
+            <h:link value="#{msgs['producto.boton.volver']}" outcome="index" />
             <h:form>
                 <!-- producto es un metodo en ProductoController -->
                 <h:panelGrid columns="3" class="table table-hover table-striped">
@@ -51,8 +52,11 @@
                     </h:inputText>
                     <h:message for="fechaRegistro" style="color:red"/>
 
-                    <h:commandButton value="#{producto.id>0 ? msgs['producto.boton.editar']: msgs['producto.boton.crear']}" action="#{productoController.guardar}"
-                                     class="btn btn-primary"/>
+                    <h:commandButton
+                            value="#{producto.id > 0 ? msgs['producto.boton.editar'] : msgs['producto.boton.crear']}"
+                            action="#{productoController.guardar}"
+                            class="btn btn-primary" />
+
                     <h:inputHidden value="#{producto.id}"/>
                     <p>&#160;</p>
                 </h:panelGrid>

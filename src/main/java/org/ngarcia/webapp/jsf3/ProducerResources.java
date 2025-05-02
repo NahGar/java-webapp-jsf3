@@ -23,6 +23,8 @@ public class ProducerResources {
     @Named("msgs")
     public ResourceBundle beanBundle() {
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-        return ResourceBundle.getBundle("messages.properties",locale);
+        //return ResourceBundle.getBundle("messages.properties",locale);
+        Locale simplifiedLocale = new Locale(locale.getLanguage());
+        return ResourceBundle.getBundle("messages",simplifiedLocale);
     }
 }

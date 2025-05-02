@@ -1,6 +1,6 @@
 package org.ngarcia.webapp.jsf3.controllers;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.*;
 import jakarta.enterprise.inject.*;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -11,6 +11,7 @@ import org.ngarcia.webapp.jsf3.entities.Producto;
 import org.ngarcia.webapp.jsf3.services.ProductoService;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 //@Named
 //@RequestScoped
@@ -27,10 +28,14 @@ public class ProductoController {
    @Inject
    private FacesContext facesContext;
 
+   @Inject
+   private ResourceBundle bundle;
+
    @Produces
    @Model
    public String titulo() {
-      return "Hola mundo JavaServer Faces 3.0 desde controller";
+      //return "Hola mundo JavaServer Faces 3.0 desde controller";
+      return bundle.getString("producto.index.titulo");
    }
 
    @Produces
@@ -46,10 +51,14 @@ public class ProductoController {
    @Produces
    @Model
    public Producto producto() {
-      this.producto = new Producto();
-      if(this.id != null && this.id > 0) {
-         service.porId(id).ifPresent(p -> this.producto = p);
+      //this.producto = new Producto();
+      if (this.producto == null) {
+         this.producto = new Producto();
+         if (this.id != null && this.id > 0) {
+            service.porId(id).ifPresent(p -> this.producto = p);
+         }
       }
+      System.out.println("PRODUCTO " + producto);
       return this.producto;
    }
 
@@ -60,9 +69,6 @@ public class ProductoController {
       return service.listarCategorias();
    }
 
-
-   @Produces
-   @Model
    public String guardar() {
 
       //guarda id porque service.guardar() carga uno en insert
@@ -72,10 +78,14 @@ public class ProductoController {
       service.guardar(this.producto);
 
       if(id != null && id > 0) {
-         facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " actualizado"));
+         //facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " actualizado"));
+         facesContext.addMessage(null,new FacesMessage(
+                 String.format(bundle.getString("producto.mensaje.editar"),producto.getNombre())));
       }
       else {
-         facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " creado"));
+         //facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " creado"));
+         facesContext.addMessage(null,new FacesMessage(
+                 bundle.getString("producto.mensaje.crear"),producto.getNombre()));
       }
 
       //el redirect es importante para evitar que se ejecute más de una vez (creo)
@@ -83,8 +93,8 @@ public class ProductoController {
    }
 
    public String editar(Long id) {
-      System.out.println(this.producto);
       this.id = id;
+      // Quita el faces-redirect para mantener el ID durante validaciones
       return "productoForm.xhtml";
    }
 
@@ -92,7 +102,9 @@ public class ProductoController {
 
       service.eliminar(producto.getId());
 
-      facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " eliminado"));
+      //facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " eliminado"));
+      facesContext.addMessage(null,new FacesMessage(
+              bundle.getString("producto.mensaje.eliminar"),producto.getNombre()));
 
       return "index.xhtml?faces-redirect=true";
    }
