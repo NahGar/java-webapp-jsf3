@@ -81,7 +81,7 @@ public class ProductoController {
       else {
          //facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " creado"));
          facesContext.addMessage(null,new FacesMessage(
-                 bundle.getString("producto.mensaje.crear"),producto.getNombre()));
+                 String.format(bundle.getString("producto.mensaje.crear"),producto.getNombre())));
       }
       
       service.guardar(this.producto);
