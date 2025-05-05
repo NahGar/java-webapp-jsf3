@@ -71,13 +71,9 @@ public class ProductoController {
 
    public String guardar() {
 
-      //guarda id porque service.guardar() carga uno en insert
-      Long id = this.producto.getId();
-
       System.out.println("GUARDAR: "+this.producto);
-      service.guardar(this.producto);
-
-      if(id != null && id > 0) {
+      
+      if(producto.getId() != null && producto.getId() > 0) {
          //facesContext.addMessage(null,new FacesMessage("Producto " + producto.getNombre() + " actualizado"));
          facesContext.addMessage(null,new FacesMessage(
                  String.format(bundle.getString("producto.mensaje.editar"),producto.getNombre())));
@@ -87,7 +83,8 @@ public class ProductoController {
          facesContext.addMessage(null,new FacesMessage(
                  bundle.getString("producto.mensaje.crear"),producto.getNombre()));
       }
-
+      
+      service.guardar(this.producto);
       //el redirect es importante para evitar que se ejecute más de una vez (creo)
       return "index.xhtml?faces-redirect=true";
    }
