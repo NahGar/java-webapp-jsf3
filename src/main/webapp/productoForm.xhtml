@@ -46,7 +46,7 @@
 
                     <h:outputLabel value="#{msgs['producto.fechaRegistro']}" for="fechaRegistro" class="col-form-label"/>
                     <h:inputText id="fechaRegistro" value="#{producto.fechaRegistro}" class="form-control"
-                                 label="Fecha registro" convertMessage="Indique la fecha con formato yyyyy-MM-dd">
+                                 label="Fecha registro" converterMessage="Indique la fecha con formato yyyyy-MM-dd">
                         <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
                         <f:passThroughAttribute name="type" value="date"/>
                     </h:inputText>
